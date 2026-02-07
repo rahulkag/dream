@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dream App</title>
+</head>
+<body style="text-align:center; margin-top:50px; font-family:Arial;">
+  <button onclick="showText()" style="padding:12px 20px;">
+    Click me
+  </button>
+
+  <p id="text" style="display:none; margin-top:20px;">
+    Hello from my app 👋
+  </p>
+
+  <script>
+    function showText() {
+      document.getElementById("text").style.display = "block";
+    }
+  </script>
+</body>
+</html>

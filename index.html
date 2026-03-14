@@ -3,21 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dream App</title>
+  <title>Dream Certificate</title>
+  <style>
+    body {
+      display: block;
+      background-color: #fff;
+      background-repeat: no-repeat;
+      font-family: cursive, sans-serif, serif;
+      min-height: 100vh;
+      /* Remove flex centering from body, let .certificate-card handle its own centering */
+    }
+    .certificate-card {
+      background: #fff !important;
+      border: 6px solid #1976d2;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.12);
+      max-width: 520px;
+      width: 95%;
+      padding: 48px 36px 36px 36px;
+      margin: 40px auto 0 auto;
+      /* position: relative; */
+      display: block;
+    }
+    .certificate-title {
+      color: #d32f2f;
+      font-size: 2.2em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .certificate-subtitle {
+      color: #1976d2;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      text-align: center;
+      font-style: italic;
+    }
+    .input-box, .textarea-box {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #b3c6e0;
+      border-radius: 7px;
+      margin-bottom: 22px;
+      font-size: 1.1em;
+      box-sizing: border-box;
+      transition: border 0.2s;
+      font-family: inherit;
+    }
+    .input-box:focus, .textarea-box:focus {
+      border: 2px solid #1976d2;
+      outline: none;
+    }
+    .primary-btn {
+      padding: 14px 32px;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.15em;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+      margin-top: 10px;
+      width: 100%;
+    }
+    .primary-btn:hover {
+      background: #1565c0;
+    }
+    .certificate-content {
+      text-align: center;
+      margin-top: 30px;
+      background: #fff;
+    }
+    .cert-name {
+      color: #1976d2;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .cert-dream {
+      color: #d32f2f;
+      font-size: 1.2em;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+    .cert-date {
+      color: #333;
+      font-size: 1em;
+      margin-bottom: 8px;
+    }
+    .cert-footer {
+      width: 100%;
+      text-align: center;
+      color: #b3c6e0;
+      font-size: 0.95em;
+      letter-spacing: 1px;
+    }
+    .web-ref {
+     color:#1976d2;
+     text-decoration:underline;
+     font-size:1em;
+    }
+    @media (max-width: 600px) {
+      .certificate-card {
+        padding: 24px 8px 24px 8px;
+      }
+      .certificate-title {
+        font-size: 1.3em;
+      }
+    }
+  </style>
 </head>
-<body style="text-align:center; margin-top:50px; font-family:Arial;">
-  <button onclick="showText()" style="padding:12px 20px;">
-    Click me
-  </button>
+<body>
+  <!-- First Page Button -->
+  <div id="startSection" class="certificate-card red">
+    <div class="certificate-title">Find your dream</div>
+    <div class="certificate-subtitle">Click below to begin your journey</div>
+    <button id="reviewBtn" class="primary-btn">
+      Start Dream Review
+    </button>
+    <div class="cert-footer">Dream App &copy; 2026</div>
+  </div>
 
-  <p id="text" style="display:none; margin-top:20px;">
-    Hello from my app 👋
-  </p>
+  <!-- Dream Finding Section -->
+  <div id="dreamSection" class="certificate-card" style="display:none;">
+    <!-- <div class="certificate-title">Dream Certificate</div> -->
+    <div class="certificate-subtitle">Fill in your details to generate your certificate</div>
+    <input id="nameInput" class="input-box" type="text" placeholder="Enter your name">
+    <textarea id="dreamInput" class="textarea-box" placeholder="Describe your dream" rows="4"></textarea>
+    <button id="showDreamBtn" class="primary-btn">Reveal Your Dream</button>
+    <div class="cert-footer">Dream App &copy; 2026</div>
+  </div>
+
+  <!-- Dream Found Section -->
+  <div id="resultSection" class="certificate-card red" style="display:none;">
+    <div class="certificate-subtitle">This is how <span id="userName" class="cert-name"></span> found their dream</div>
+    <section id="resultText" class="certificate-content">
+      <div id="userDream" class="cert-dream"></div>
+      <div id="userDreamDate" class="cert-date"></div>
+    </section>
+    <div class="cert-footer">
+      Congratulations on dreaming ...!<br>
+      <!-- <a href="https://yourdreamwebsite.com" target="_blank" class="web-ref">Try here</a> -->
+    </div>
+    <!-- Download Button -->
+    <button id="downloadBtn" class="primary-btn">
+      Download your dream
+    </button>
+  </div>
 
   <script>
-    function showText() {
-      document.getElementById("text").style.display = "block";
-    }
+    // Show dream finding section
+    document.getElementById('reviewBtn').onclick = function() {
+      document.getElementById('startSection').style.display = 'none';
+      document.getElementById('dreamSection').style.display = 'block';
+    };
+
+    // Show dream result as certificate
+    document.getElementById('showDreamBtn').onclick = function() {
+      var name = document.getElementById('nameInput').value.trim();
+      var dream = document.getElementById('dreamInput').value.trim();
+      if(name && dream) {
+        document.getElementById('dreamSection').style.display = 'none';
+        document.getElementById('resultSection').style.display = 'block';
+        document.getElementById('userName').textContent = name;
+        document.getElementById('userDream').textContent = '"' + dream + '"';
+        document.getElementById('userDreamDate').textContent = "Found on " + new Date().toLocaleString();
+      } else {
+        alert('Please enter your name and your dream.');
+      }
+    };
+
+     // Download certificate as image
+    document.getElementById('downloadBtn').onclick = function() {
+      var btn = document.getElementById('downloadBtn');
+      btn.style.display = 'none'; // Hide button
+      html2canvas(document.getElementById('resultSection'), { backgroundColor: '#fff', useCORS: true, allowTaint: true, logging: true, scale: 2 }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = 'dream-certificate.png';
+        link.href = canvas.toDataURL();
+        link.click();
+        btn.style.display = '';
+      });
+    };
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 </body>
 </html>
